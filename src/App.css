@@ -25,11 +25,13 @@
 
 /* Global Enhancements */
 body {
-  background: var(--background);
+  background: #000;
+  position: relative;
+  overflow: auto;
   color: var(--text);
   font-family: 'Inter', system-ui, sans-serif;
   line-height: 1.6;
-  overflow-x: hidden;
+  padding-top: 30px;
 }
 
 @keyframes gradient {
@@ -38,19 +40,60 @@ body {
   100% { background-position: 0% 50%; }
 }
 
-/* Container Design */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1rem;
-  min-height: 100vh;
-  box-sizing: border-box;
-  background: var(--card-bg);
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--border);
-  border-radius: 2rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+/* Add animated gradient overlay */
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+/* Create star layers */
+body::before {
+  background-image: 
+    radial-gradient(5px 2px at 20% 30%, #ed01fe 10%, transparent 50%),
+    radial-gradient(2px 2px at 80% 70%, #ed01fe 10%, transparent 50%),
+    radial-gradient(2px 2px at 90% 20%, #ed01fe 10%, transparent 50%);
+  background-size: 200px 200px;
+  animation: stars 20s linear infinite;
+}
+
+body::after {
+  background-image: 
+    radial-gradient(1px 1px at 50% 80%, #fff 10%, transparent 50%),
+    radial-gradient(1px 1px at 10% 10%, #fff 10%, transparent 50%);
+  background-size: 300px 300px;
+  animation: stars 30s linear infinite;
+  opacity: 0.7;
+}
+
+@keyframes stars {
+  from { background-position: 0 0; }
+  to { background-position: 1000px 500px; }
+}
+
+/* Add shooting stars */
+.star {
+  position: absolute;
+  width: 100px;
+  height: 2px;
+  background: linear-gradient(-45deg, #fff, rgba(255,255,255,0));
+  animation: shooting 2s infinite;
+}
+
+@keyframes shooting {
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(-45deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(300%) translateY(300%) rotate(-45deg);
+    opacity: 0;
+  }
 }
 
 /* Navigation Bar */
@@ -59,11 +102,18 @@ nav {
   border: 1px solid var(--border);
   border-radius: 1rem;
   padding: 1rem;
-  margin: 2rem auto;
-  gap: 0.75rem;
+  position: fixed;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
   display: flex;
-  justify-content: center;
-  width: fit-content;
+  gap: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+body:hover nav {
+  top: 0;
 }
 
 nav button {
@@ -99,10 +149,21 @@ nav button {
   border-radius: 1.25rem;
   padding: 2rem;
   box-shadow: 0 4px 6px -1px rgba(255, 255, 255, 0.1);
-  max-width: 800px;
-  margin: 1rem auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 95%;
+  max-width: 800px;
   transition: all 0.3s ease;
+  max-height: 90vh;
+  overflow: hidden;
+  margin-top: 120px; /* Add space for navigation */
+}
+
+.challenge-container:hover {
+  transform: translate(-50%, -50%) translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
 }
 
 /* Canvas Styling */
@@ -305,12 +366,6 @@ nav button:hover {
   box-shadow: 0 10px 15px -3px rgba(124, 58, 237, 0.3);
 }
 
-/* Fix challenge container hover */
-.challenge-container:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-}
-
 /* Fix canvas hover state */
 canvas:hover {
   transform: scale(1.01);
@@ -372,14 +427,20 @@ input[type="color"]:hover {
 }
 
 .auth-card {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
+  margin: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.7) !important;
+  backdrop-filter: blur(12px);
   padding: 2.5rem;
   border-radius: 1.5rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 400px;
   text-align: center;
+  border: 1px solid rgba(255,255,255,0.1);
+  color: white;
 }
 
 .auth-form input {
@@ -451,22 +512,28 @@ input[type="color"]:hover {
 .dashboard-container {
   display: flex;
   justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 2rem;
+  padding: 1rem;
 }
 
 .dashboard-card {
-  background: rgba(255, 255, 255, 0.95);
+  margin: 2rem auto; /* Vertical spacing + horizontal centering */
+  left: auto;
+  right: auto;
+  background: rgba(0, 0, 0, 0.7) !important;
   backdrop-filter: blur(12px);
   padding: 3rem 2.5rem;
   border-radius: 2rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 600px;
   text-align: center;
   position: relative;
   overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.1);
+  color: white;
+  margin-top: 0.01rem;
+  transform: translateY(0);
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
 }
 
 .welcome-section h1 {
@@ -515,16 +582,17 @@ input[type="color"]:hover {
   color: #9ca3af;
   pointer-events: none;
   transition: all 0.3s ease;
+  z-index: 1;
+  background: rgba(0,0,0,0.7);
+  padding: 0 0.5rem !important;
+  left: 0.5rem !important;
 }
 
 .input-group input:focus ~ label,
 .input-group input:not(:placeholder-shown) ~ label {
-  top: -0.5rem;
-  left: 0.8rem;
-  font-size: 0.875rem;
-  color: var(--primary);
-  background: white;
-  padding: 0 0.25rem;
+  top: -0.8rem !important;
+  font-size: 0.75rem !important;
+  z-index: 2;
 }
 
 .start-button {
@@ -707,14 +775,59 @@ input[type="color"]:hover {
   padding: 1rem;
 }
 
+.drawing {
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
 .artist {
   color: var(--secondary);
   font-size: 0.9rem;
-  margin-top: 0.5rem;
   font-style: italic;
 }
 
-.prompt {
-  font-weight: 600;
-  color: var(--text);
+/* Add to container class */
+.container {
+  position: relative;
+  overflow: visible;
+  min-height: 100vh;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+/* Update input styles in dashboard */
+.dashboard-card .input-group input {
+  color: white;
+  border-color: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.1);
+}
+
+.dashboard-card .input-group input::placeholder {
+  color: rgba(255,255,255,0.5);
+}
+
+.dashboard-card .input-group label {
+  color: rgba(255,255,255,0.7);
+}
+
+/* Make individual sections scrollable */
+.dashboard-card,
+.challenge-container,
+.gallery {
+  overflow-y: auto;
+  max-height: calc(100vh - 120px);
+  margin: 20px 0;
+}
+
+/* Add mouse detection zone */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  z-index: 999;
+  background: transparent;
 } 

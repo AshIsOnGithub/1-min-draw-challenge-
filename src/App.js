@@ -20,12 +20,31 @@ function App() {
     });
   }, []);
 
+  useEffect(() => {
+    const createShootingStar = () => {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.top = `${Math.random() * 100}%`;
+      star.style.left = `${Math.random() * 100}%`;
+      document.body.appendChild(star);
+      
+      setTimeout(() => star.remove(), 2000);
+    };
+    
+    const interval = setInterval(createShootingStar, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="container">
       <nav>
-        <button onClick={() => setView('dashboard')}>Dashboard</button>
-        <button onClick={() => setView('gallery')}>Gallery</button>
-        {session && <button onClick={() => supabase.auth.signOut()}>Logout</button>}
+        {session && (
+          <>
+            <button onClick={() => setView('dashboard')}>Dashboard</button>
+            <button onClick={() => setView('gallery')}>Gallery</button>
+            <button onClick={() => supabase.auth.signOut()}>Logout</button>
+          </>
+        )}
       </nav>
       
       {!session ? (

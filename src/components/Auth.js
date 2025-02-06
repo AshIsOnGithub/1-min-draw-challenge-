@@ -38,7 +38,7 @@ export default function Auth() {
   return (
     <div className="auth-container">
       <div className="auth-card">
-        <h2>🎨 Welcome Artist! 🖌️</h2>
+        <h2>{isLogin ? 'Welcome Back!' : 'Create Account'}</h2>
         <form className="auth-form" onSubmit={handleSubmit}>
           <input
             type="email"
