@@ -1,0 +1,2 @@
+SELECT * FROM drawing_prompts LIMIT 1;
+-- Should return at least 1 row 

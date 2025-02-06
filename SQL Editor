@@ -1,0 +1,3 @@
+ALTER TABLE drawing_prompts DISABLE ROW LEVEL SECURITY;
+-- Test if prompts load, then re-enable:
+ALTER TABLE drawing_prompts ENABLE ROW LEVEL SECURITY; 
