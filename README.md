@@ -68,6 +68,3 @@ Contributions are welcome! Please open an issue or submit a pull request.
 ## Testing
 
 No formal testing framework is included in the provided code.  Testing should be added for improved code quality and robustness.
-
-
-*README.md was made with [Etchr](https://etchr.dev)*
