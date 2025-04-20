@@ -1,4 +1,0 @@
-CREATE POLICY "Allow public read" 
-ON public.drawing_prompts 
-FOR SELECT 
-USING (true); 

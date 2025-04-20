@@ -71,13 +71,7 @@ export default function Dashboard({ setView }) {
         </button>
 
         <div className="art-preview">
-          <div className="floating-pencil">
-            <div className="pencil-body">
-              <div className="tip"></div>
-              <div className="eraser"></div>
-            </div>
-            <div className="color-trail"></div>
-          </div>
+          {/* Floating pencil elements removed */}
         </div>
       </div>
     </div>
