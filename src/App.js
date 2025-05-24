@@ -9,6 +9,7 @@ import './App.css';
 function App() {
   const [session, setSession] = useState(null);
   const [view, setView] = useState('dashboard');
+  const [theme, setTheme] = useState('dark');
 
   useEffect(() => {
     supabase.auth.onAuthStateChange((_event, session) => {
@@ -19,6 +20,11 @@ function App() {
       setSession(session);
     });
   }, []);
+
+  useEffect(() => {
+    // Apply theme to document root
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
 
   useEffect(() => {
     const createShootingStar = () => {
@@ -35,9 +41,16 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
+  const toggleTheme = () => {
+    setTheme(theme === 'dark' ? 'light' : 'dark');
+  };
+
   return (
     <div className="container">
       <nav>
+        <button onClick={toggleTheme} className="theme-toggle">
+          {theme === 'dark' ? '☀️' : '🌙'} {theme === 'dark' ? 'Light' : 'Dark'}
+        </button>
         {session && (
           <>
             <button onClick={() => setView('dashboard')}>Dashboard</button>

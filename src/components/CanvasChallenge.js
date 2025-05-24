@@ -11,7 +11,7 @@ const CanvasChallenge = ({ setView }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
-  // Move getPrompt outside useEffect
+  
   const getPrompt = async () => {
     try {
       const { data } = await supabase
@@ -33,7 +33,7 @@ const CanvasChallenge = ({ setView }) => {
     }
   };
 
-  // Update useEffect to use the standalone function
+
   useEffect(() => {
     getPrompt();
   }, []);
@@ -109,7 +109,7 @@ const CanvasChallenge = ({ setView }) => {
         return;
       }
 
-      // Get username from user metadata
+      // Get username from user
       const username = user.user_metadata?.username || 'Anonymous Artist';
 
       const { error } = await supabase

@@ -18,7 +18,7 @@ const VotingGallery = () => {
   };
 
   const handleVote = async (id, currentVotes) => {
-    // Optimistic update
+    
     setDrawings(prev => prev.map(d => 
       d.id === id ? { ...d, votes: d.votes + 1 } : d
     ));
